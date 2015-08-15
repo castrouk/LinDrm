@@ -1,0 +1,18 @@
+[Desktop Entry]
+Comment=
+Comment[en_GB]=
+Exec[$e]=rqt4console
+GenericName=
+GenericName[en_GB]=
+Icon=lxterminal
+MimeType=
+Name=qt4console
+Name[en_GB]=qt4console
+Path[$e]=
+StartupNotify=true
+Terminal=true
+TerminalOptions=\s--noclose
+Type=Application
+X-DCOP-ServiceType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

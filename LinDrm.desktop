@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=/home/castro/Work-64/LinDrm-qt5-TX/LinDrm
+GenericName[en_US]=
+GenericName=
+Icon=/home/main/icons/lindrm.png
+MimeType=
+Name[en_US]=LinDrm
+Name=LinDrm
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

@@ -1,0 +1,97 @@
+/******************************************************************************\
+ * Copyright (c) 2009 Glyn Adgie
+ *
+ * Author(s):
+ *	Glyn Adgie
+ *
+ * Description:
+ *	C++ interfaces for fftw3 functions. Windowing functions.
+ *
+ ******************************************************************************
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later 
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more 
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+\******************************************************************************/
+
+#include "FFT.h"
+
+void ComplexFFT::init(int size, int direction)
+{
+	m_in.resize(size);
+	m_out.resize(size);
+	fftw_complex * p_in =
+		reinterpret_cast<fftw_complex *>(&(*m_in.begin()));
+	fftw_complex * p_out =
+		reinterpret_cast<fftw_complex *>(&(*m_out.begin()));
+	plan = fftw_plan_dft_1d(size, p_in, p_out, direction, FFTW_ESTIMATE);
+}
+
+void FFTr2c::init(int size)
+{
+	m_in.resize(size);
+	m_out.resize(size);
+	double * p_in = &(*m_in.begin());
+	fftw_complex * p_out =
+		reinterpret_cast<fftw_complex *>(&(*m_out.begin()));
+	plan = fftw_plan_dft_r2c_1d(size, p_in, p_out, FFTW_ESTIMATE);
+}
+
+void FFTc2r::init(int size)
+{
+	m_in.resize(size);
+	m_out.resize(size);
+	fftw_complex * p_in =
+		reinterpret_cast<fftw_complex *>(&(*m_in.begin()));
+	double * p_out = &(*m_out.begin());
+	plan = fftw_plan_dft_c2r_1d(size, p_in, p_out, FFTW_ESTIMATE);
+}
+
+void make_hamming_vec(vector<_REAL> & vec)
+{
+	_REAL x = 0.0;
+	_REAL x_inc = 2.0 * M_PI / (vec.size() - 1);
+	for(vector<_REAL>::iterator it = vec.begin();
+			it != vec.end(); it++)
+	{
+		*it = 0.54 - 0.46 * cos(x);
+		x += x_inc;
+	}
+
+}
+
+void make_inverse_hamming_vec(vector<_REAL> & vec)
+{
+	_REAL x = 0.0;
+	_REAL x_inc = 2.0 * M_PI / (vec.size() - 1);
+	for(vector<_REAL>::iterator it = vec.begin();
+			it != vec.end(); it++)
+	{
+		*it = 1.0 / (0.54 - 0.46 * cos(x));
+		x += x_inc;
+	}
+}
+
+void make_blackman_vec(vector<_REAL> & vec)
+{
+	_REAL x = 0.0;
+	_REAL x_inc = 2.0 * M_PI / (vec.size() - 1);
+	for(vector<_REAL>::iterator it = vec.begin();
+			it != vec.end(); it++)
+	{
+		*it = 0.42 - 0.5 * cos(x) + 0.08 * cos(2.0 * x);
+		x += x_inc;
+	}
+}
+
